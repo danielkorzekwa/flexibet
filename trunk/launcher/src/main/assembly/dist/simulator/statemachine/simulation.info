@@ -1,0 +1,8 @@
+marketfilter {
+
+	soccer {
+		eventpath = "/1/"
+		marketname = "Match Odds"
+		bwinmatched= "false"
+	}
+}

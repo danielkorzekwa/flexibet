@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">__isdisplay__sport_name_116_0</property>
+            <property name="value">BASKETBALL</property>
+        </structure>
+        <structure>
+            <property name="name">sport_name_116_1</property>
+            <property name="value">BASKETBALL</property>
+        </structure>
+        <structure>
+            <property name="name">sport_name_116_type_</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">sport_name_116_expr_</property>
+            <property name="value">dataSetRow["sport_name"]</property>
+        </structure>
+    </list-property>
+</report>

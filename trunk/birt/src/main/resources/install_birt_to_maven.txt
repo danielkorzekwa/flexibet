@@ -1,0 +1,7 @@
+mvn install:install-file -Dfile=coreapi.jar -DgroupId=birt -DartifactId=birt-coreapi -Dversion=2.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=engineapi.jar -DgroupId=birt -DartifactId=birt-engineapi -Dversion=2.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=modelapi.jar -DgroupId=birt -DartifactId=birt-modelapi -Dversion=2.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=com.ibm.icu_3.8.1.v20080530.jar -DgroupId=birt -DartifactId=birt-icu -Dversion=2.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=js.jar -DgroupId=birt -DartifactId=birt-js -Dversion=2.3.1 -Dpackaging=jar
+mvn install:install-file -Dfile=org.apache.commons.codec_1.3.0.v20080530-1600.jar -DgroupId=birt -DartifactId=birt-commons-codec -Dversion=2.3.1 -Dpackaging=jar
+

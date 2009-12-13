@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../../common.css" />
+</head>
+<body>
+<wicket:panel>
+ 
+ 	Bets: <span wicket:id="betsNum"></span><br/><br/>
+ 		
+	<table class="simple">
+		<tr>
+			<th>Market</th>
+			<th>Market Id</th>
+			<th>Selection</th>
+			<th>Type</th>
+			<th>Bet ID</th>
+			<th>Bet placed</th>
+			<th>Odds req.</th>
+			<th>Stake</th>
+		</tr>
+		<tr wicket:id="item">
+		    <td><span wicket:id="market">GB / Wolv 4th Apr / 18:50 To Be Placed</span></td>
+			<td><a href="" wicket:id="marketIdLink"><span wicket:id="marketId">234565322</span></a> <a href="#" wicket:id="betFairLink">BetFair</a></td>
+			<td><span wicket:id="selection">Rising star</span></td>
+			<td><span wicket:id="betType">B</span></td>
+			<td><span wicket:id="betId">3456776433</span></td>
+			<td><span wicket:id="betPlaced">2009-03-29 05:44</span></td>
+			<td><span wicket:id="oddsReq">3.4</span></td>
+			<td><span wicket:id="stake">6</span></td>
+		</tr>
+	</table>
+	
+</wicket:panel>
+</body>
+</html>

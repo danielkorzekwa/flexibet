@@ -1,0 +1,16 @@
+marketfilter {
+
+	soccer {
+		eventpath = "/1/"
+		marketname = "Match Odds"
+		bwinmatched = "true"
+		inplay = "true"
+	}
+	
+	horseracing_GB {
+		eventpath = "/7/298251/"
+		bwinmatched = "false"
+		inplay = "false"
+	}
+
+}

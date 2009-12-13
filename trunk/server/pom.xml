@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<artifactId>flexibet-pom</artifactId>
+		<groupId>dk.flexibet</groupId>
+		<version>1.31-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>dk.flexibet</groupId>
+	<artifactId>flexibet-server</artifactId>
+	<name>flexibet-server</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+
+		<!-- #### START OF INTERNAL DEPENDENCIES #### -->
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-marketobserver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-bettingengine</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-betfair</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-betdaq</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-bwin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-oddschecker</artifactId>
+		</dependency>
+		<!-- #### END OF INTERNAL DEPENDENCIES #### -->
+
+
+		<!-- #### START OF THIRD PARTY DEPENDENCY VERSIONS #### -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>groovy</groupId>
+			<artifactId>groovy</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+		</dependency>
+		
+			<!-- Test dependencies -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jmock</groupId>
+				<artifactId>jmock</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jmock</groupId>
+				<artifactId>jmock-junit4</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-core</artifactId>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-library</artifactId>
+				<scope>test</scope>
+			</dependency>
+
+		<!-- #### END OF THIRD PARTY DEPENDENCIES #### -->
+
+
+	</dependencies>
+</project>

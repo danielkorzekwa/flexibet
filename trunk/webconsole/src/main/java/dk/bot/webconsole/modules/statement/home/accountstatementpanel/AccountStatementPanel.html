@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../common.css" />
+</head>
+<body>
+<wicket:panel>
+ 	
+ 	Profit: <span wicket:id="profit"></span>,  
+ 	Commission: <span wicket:id="commission"></span>, 
+ 	Bets: <span wicket:id="numOfBets"></span>,
+ 	Items[displayed/all]: <span wicket:id="numOfDisplayedItems"></span>/<span wicket:id="numOfAllItems"></span>,
+ 	
+ 	<br/><br/>
+ 	
+	<table class="simple">
+		<tr>
+			<th>Settled</th>
+			<th>Ref Id</th>
+			<th>Placed</th>
+			<th>Market Id</th>
+			<th>Description</th>
+			<th>Selection</th>
+			<th>Type</th>
+			<th>Avg. Odds</th>
+			<th>Stake</th>
+			<th>Amount</th>
+		</tr>
+		<tr wicket:id="item">
+			<td><span wicket:id="settled">2009-03-29 05:44</span></td>
+			<td><span wicket:id="refId">7556746436</span></td>
+			<td><span wicket:id="placed">2009-03-28 02:41</span></td>
+			<td><a href="" wicket:id="marketIdLink"><span wicket:id="marketId">234565322</span></a></td>
+			<td><span wicket:id="description">GB / Kelso 29th Mar/ 17:30 TO BE PLACED</span></td>
+			<td><span wicket:id="selection">Rising Star</span> <a href="" wicket:id="lastMatchedPricesChartLink">chart</a></td>
+			<td><span wicket:id="betType">Back</span></td>
+			<td><span wicket:id="avgOdds">2.33</span></td>
+			<td><span wicket:id="stake">6</span></td>
+			<td><span wicket:id="amount">7.98</span></td>
+		</tr>
+	</table>
+	
+</wicket:panel>
+</body>
+</html>

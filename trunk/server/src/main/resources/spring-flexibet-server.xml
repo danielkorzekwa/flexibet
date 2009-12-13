@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<context:annotation-config/>
+	<context:property-placeholder location="file:${BOT_HOME}/conf/bot.properties"/>
+	
+	<bean id="marketRunnerListener" class="dk.flexibet.server.marketlistener.MarketRunnerListenerImpl">
+		<constructor-arg ref="bettingEngine" />
+		<constructor-arg ref="betsDao" />
+		<constructor-arg ref="runnerStateLastBetDao" />
+		<constructor-arg ref="runnerStateDao" />
+		<constructor-arg ref="marketDao" />
+		<constructor-arg ref="betexArchivePublisher" />
+		<constructor-arg value="${sendPricesToBetexArchivePublisher}"/>
+	</bean>
+	
+	<bean id="betexArchivePublisher" class="dk.flexibet.server.betexarchive.BetexArchivePublisherImpl">
+		<constructor-arg ref="histRunnerPriceDao"/>
+	</bean>
+
+	<bean id="betApi" class="dk.flexibet.server.betapi.BetFairBetApiImpl">
+		<constructor-arg ref="betFairService"/>
+	</bean>
+
+	<bean id="bettingEngine"
+		class="dk.bot.bettingengine.BettingEngineFactoryBean">
+		<constructor-arg ref="betApi" />
+		<constructor-arg ref="bettingEngineDao" />
+		<constructor-arg ref="stateMachineServiceConfig" />
+	</bean>
+	<bean id="stateMachineServiceConfig"
+		class="dk.flexibet.server.config.bettingengine.StateMachineServiceConfigFactoryBean">
+		<constructor-arg
+			value="${BOT_HOME}/conf/bettingengine.properties" />
+	</bean>
+	
+	<bean id="marketObserverConfig"
+		class="dk.flexibet.server.config.MarketObserverConfigFactoryBean">
+		<constructor-arg ref="stateMachineServiceConfig"/>
+		<property name="startInHoursFrom" value="${startinhoursfrom}"/>
+		<property name="startInHoursTo" value="${startinhoursto}"/>
+		<property name="exchangeId" value="${exchangeid}"/>
+		<property name="marketStatus" value="${marketstatus}"/>
+		<property name="marketType" value="${markettype}"/>
+	</bean>
+
+	<bean id="marketObserver"
+		class="dk.bot.marketobserver.MarketObserverImpl" init-method="start">
+		<constructor-arg ref="betFairService" />
+		<constructor-arg ref="bwinService" />
+		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="marketRunnerListener" />
+		<constructor-arg ref="marketObserverConfig" />
+	</bean>
+	
+	<bean id="marketWinnerGenerator" class="dk.flexibet.server.marketwinnergenerator.MarketWinnerGeneratorImpl">
+		<property name="marketObserver" ref="marketObserver"/>
+	</bean>
+	
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<!-- a PlatformTransactionManager is still required -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- (this dependency is defined somewhere else) -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		init-method="getConnection" destroy-method="close">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="accountStatementMBean" class="dk.flexibet.server.mbean.accountstatement.AccountStatementMBeanImpl"/>
+	<bean id="bettingServerMBean" class="dk.flexibet.server.mbean.BettingServerMbeanImpl"/>
+	
+	<context:mbean-export/>
+</beans>

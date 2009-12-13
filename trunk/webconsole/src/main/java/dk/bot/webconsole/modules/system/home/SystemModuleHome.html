@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../../common.css" />
+</head>
+<body>
+<wicket:panel>
+
+	<div wicket:id="modalWindow">[Modal window to show error
+	details.]</div>
+
+	<form wicket:id="form">
+	Scheduler: <span wicket:id="schedulerStatus">Running</span> <input type="submit" value="Stop" wicket:id="stopScheduler"/>
+	</form> 
+
+	<table class="simple">
+		<tr>
+			<th>Bean name</th>
+			<th>Successes</th>
+			<th>Failures</th>
+			<th>Last run [s]</th>
+			<th>Current run [s]</th>
+			<th>Status</th>
+			<th>Last error</th>
+			<th>Last error date</th>
+		</tr>
+		<tr wicket:id="beansStat">
+			<td><span wicket:id="beanName">Account Statement</span></td>
+			<td><span wicket:id="successes">84</span></td>
+			<td><span wicket:id="failures">5</span></td>
+			<td><span wicket:id="lastRun">23s</span></td>
+			<td><span wicket:id="currentRun">13s</span></td>
+			<td><span wicket:id="status">OK</span></td>
+			<td><span wicket:id="lastError">IllegalArgumentException:
+			price must be > 2.</span> <a wicket:id="lastErrorDetails">More...</a></td>
+			<td><span wicket:id="lastErrorDate">17/04/09 19:39 (122
+			sec. ago)</span></td>
+		</tr>
+	</table>
+	<br />
+
+	<table class="simple">
+		<tr>
+			<th colspan="4">Cache</th>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Creation Time</th>
+			<th>Expiry Time</th>
+		</tr>
+		<tr wicket:id="cache">
+			<td><span wicket:id="cacheName">BwinCache</span></td>
+			<td><span wicket:id="cacheSize">435</span></td>
+			<td><span wicket:id="cacheCreationTime">???</span></td>
+			<td><span wicket:id="cacheExpiryTime">???</span></td>
+		</tr>
+	</table>
+	<br />
+
+	<table class="simple">
+		<tr>
+			<th>Name</th>
+			<th>Value</th>
+		</tr>
+		<tr>
+			<td>Max/last/curr hour bets</td>
+			<td><span wicket:id="maxBets">1000/765/234</span> <a href=""
+				wicket:id="maxBetsLink">more...</a></td>
+		</tr>
+		<tr wicket:id="paramStat2">
+			<td><span wicket:id="paramName">Balance (available)</span></td>
+			<td><span wicket:id="paramValue">2414.64 (2073.27) </span></td>
+		</tr>
+	</table>
+
+	<br />
+
+	<table class="simple">
+		<tr>
+			<th>Name</th>
+			<th>Value</th>
+		</tr>
+		<tr wicket:id="paramStat">
+			<td><span wicket:id="paramName">Memory used (Total)</span></td>
+			<td><span wicket:id="paramValue">31337K (49020K)</span></td>
+		</tr>
+	</table>
+</wicket:panel>
+</body>
+</html>

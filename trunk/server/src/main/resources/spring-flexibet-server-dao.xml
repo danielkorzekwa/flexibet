@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+	<!-- DAO objects -->	
+	<bean id="bettingEngineDao"
+		class="dk.flexibet.server.dao.postgres.PostgresBettingEngineDAO">
+		<constructor-arg ref="runnerStateDao"/>
+		<constructor-arg ref="runnerStateLastBetDao"/>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="betsDao"
+		class="dk.flexibet.server.dao.postgres.PostgresBetsDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="runnerStateLastBetDao"
+		class="dk.flexibet.server.dao.postgres.PostgresRunnerStateLastBetDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="accountStatementDao"
+		class="dk.flexibet.server.dao.postgres.PostgresAccountStatementDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="runnerStateDao"
+		class="dk.flexibet.server.dao.postgres.PostgresRunnerStateDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="marketDao" class="dk.flexibet.server.dao.postgres.PostgresMarketDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="histRunnerPriceDao" class="dk.flexibet.server.dao.postgres.PostgresHistRunnerPriceDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="marketDetailsDao" class="dk.bot.marketobserver.dao.postgres.PostgresMarketDetailsDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<!-- a PlatformTransactionManager is still required -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- (this dependency is defined somewhere else) -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

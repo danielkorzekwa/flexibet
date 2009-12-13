@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" xmlns:my="http://my.custom-actions/CUSTOM" version="1.0"
+ 	   
+	initialstate="layPlaced">
+
+	<state id="noBets">
+		<transition target="layPlaced"
+			cond="bwinRunner.betPriceToBack>0 and (1/runner.priceToBack - 1/bwinRunner.priceToBack) >=0.02 and runnerBets.muBets == 0">
+			<my:placeBet price="runner.priceToBack"/>
+		</transition>
+	</state>
+
+	<state id="layPlaced">
+		
+		<transition target="layMatched" cond="runnerBets.mBets > 0"/>
+		
+		<transition target="noBets" cond="runnerBets.muBets == 0" />
+		
+		<transition cond="runnerBets.uBets > 0">
+			<my:cancelBets />
+		</transition>
+		
+	</state>
+	
+	<state id="layMatched">
+		<transition target="backPlaced"
+			cond="marketDetails.marketSuspendTime-now lt 1000*3600*2 and marketDetails.marketSuspendTime-now > 1000*3600*1">
+			<my:backLMBets />
+		</transition>
+	</state>
+
+	<final id="backPlaced" />
+
+</scxml>
