@@ -1,0 +1,7 @@
+marketfilter {
+
+	HR {
+		eventpath = "/7/"
+	}
+
+}

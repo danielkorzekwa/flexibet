@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<artifactId>flexibet-pom</artifactId>
+		<groupId>dk.flexibet</groupId>
+		<version>1.31-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>dk.flexibet</groupId>
+	<artifactId>flexibet-launcher</artifactId>
+	<name>flexibet-launcher</name>
+	<url>http://maven.apache.org</url>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+
+				<configuration>
+					<finalName>${project.artifactId}</finalName>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>../lib</classpathPrefix>
+							<mainClass>
+								dk.flexibet.launcher.FlexiBetLauncher
+							</mainClass>
+						</manifest>
+
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+
+					<descriptors>
+						<descriptor>
+							src/main/assembly/assembly-zipapp.xml
+						</descriptor>
+					</descriptors>
+
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+	<dependencies>
+
+		<!-- #### START OF INTERNAL DEPENDENCIES #### -->
+		<dependency>
+				<groupId>dk.flexibet</groupId>
+				<artifactId>flexibet-server</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>dk.flexibet</groupId>
+			<artifactId>flexibet-webconsole</artifactId>
+		</dependency>
+		<!-- #### END OF INTERNAL DEPENDENCIES #### -->
+
+
+		<!-- #### START OF THIRD PARTY DEPENDENCY VERSIONS #### -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+		</dependency>
+		<!-- #### END OF THIRD PARTY DEPENDENCIES #### -->
+
+	</dependencies>
+</project>

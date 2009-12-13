@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<context:property-placeholder location="file:${BOT_HOME}/conf/bot.properties"/>
+	
+	<bean id="wicketApplication" class="dk.bot.webconsole.WicketApplication"/>
+	
+	<bean id="birtService" class="dk.bot.birt.BirtServiceImpl" init-method="init">
+		<property name="birtHome" value="c:/birt-runtime-2_3_1/ReportEngine"/>
+	</bean>
+	
+	<bean id="velocityEngine" class="org.apache.velocity.app.VelocityEngine"/>
+	
+	<!-- JMX mbeans -->
+	<bean id="marketObserverMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.marketobserver:name=MarketObserver"/>
+    	<property name="proxyInterface" value="dk.bot.marketobserver.mbean.MarketObserverMBean"/>
+	</bean>
+	
+	<bean id="bettingEngineMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.bettingengine:name=BettingEngine"/>
+    	<property name="proxyInterface" value="dk.bot.bettingengine.mbean.BettingEngineMBean"/>
+	</bean>
+	<bean id="accountStatementMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+		<property name="objectName" value="dk.flexibet.bettingserver:name=AccountStatement"/>
+    	<property name="proxyInterface" value="dk.flexibet.server.mbean.accountstatement.AccountStatementMBean"/>
+	</bean>
+	<bean id="stateMachineServiceMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.bettingengine:name=StateMachineService"/>
+    	<property name="proxyInterface" value="dk.bot.bettingengine.statemachine.StateMachineServiceMBean"/>
+	</bean>
+	<bean id="betexArchivePublisherMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.bettingapp:name=BetexArchivePublisher"/>
+    	<property name="proxyInterface" value="dk.flexibet.server.betexarchive.BetexArchivePublisherMBean"/>
+	</bean>	
+	<bean id="bettingServerMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.bettingserver:name=BettingServer"/>
+    	<property name="proxyInterface" value="dk.flexibet.server.mbean.BettingServerMBean"/>
+	</bean>
+</beans>

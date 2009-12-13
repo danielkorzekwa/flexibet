@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<context:annotation-config/>
+	<context:property-placeholder location="file:${BOT_HOME}/conf/bot.properties"/>
+
+	<context:property-placeholder/>
+
+	<bean id="bettingSimulator" class="dk.flexibet.server.simulator.BettingSimulatorIml">
+		<constructor-arg ref="bettingExchange"/>
+		<constructor-arg ref="bettingEngine"/>
+		<constructor-arg ref="lastBetDao"/>
+		<constructor-arg ref="marketDao"/>
+		<constructor-arg ref="histRunnerPriceDao"/>
+		<constructor-arg ref="stateMachineServiceMBean" />
+	</bean>
+	
+	<bean id="bettingExchange" class="dk.flexibet.server.simulator.betex.BettingExchangeInFrontOfQueueImpl"/>
+
+	<!-- Betting Engine with dependencies -->
+	<bean id="bettingEngine" class="dk.bot.bettingengine.BettingEngineFactoryBean">
+		<constructor-arg ref="betApi" />
+		<constructor-arg ref="bettingEngineDao" />
+		<constructor-arg ref="stateMachineServiceConfig" />
+	</bean>
+	<bean id="stateMachineServiceConfig"
+		class="dk.flexibet.server.config.bettingengine.StateMachineServiceConfigFactoryBean">
+		<constructor-arg
+			value="${BOT_HOME}/simulator/bettingengine.properties" />
+	</bean>
+	<bean id="betApi" class="dk.flexibet.server.simulator.bettingengine.SimBetApiImpl">
+		<constructor-arg ref="bettingExchange"/>
+	</bean>
+	<bean id="bettingEngineDao" class="dk.flexibet.server.simulator.bettingengine.SimBettingEngineDao">
+		<constructor-arg ref="lastBetDao"/>
+	</bean>
+	<bean id="lastBetDao" class="dk.flexibet.server.simulator.bettingengine.SimLastBetDaoImpl"/>
+
+	<!-- Historical markets/runners/prices data -->
+	<bean id="marketDao" class="dk.flexibet.server.dao.postgres.PostgresMarketDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="histRunnerPriceDao"
+		class="dk.flexibet.server.dao.postgres.PostgresHistRunnerPriceDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="stateMachineServiceMBean" class="org.springframework.jmx.access.MBeanProxyFactoryBean">
+    	<property name="objectName" value="dk.flexibet.bettingengine:name=StateMachineService"/>
+    	<property name="proxyInterface" value="dk.bot.bettingengine.statemachine.StateMachineServiceMBean"/>
+	</bean>
+</beans>

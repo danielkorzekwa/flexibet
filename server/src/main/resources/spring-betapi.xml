@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="bwinService" class="dk.bot.bwinservice.BWinServiceImpl"/>
+	
+	<bean id="oddsCheckerService" class="dk.bot.oddschecker.OddsCheckerServiceImpl"/>
+	
+	<bean id="betFairService" class="${betfair.factoryClass}" init-method="login">
+		<property name="user" value="${betfair.user}"/>
+		<property name="password" value="${betfair.password}"/>
+		<property name="productId" value="${betfair.productid}"/>
+	</bean>
+	
+</beans>

@@ -1,0 +1,6 @@
+marketfilter {
+
+	horseracing_GB {
+		eventpath = "/100004/190538/"
+	}
+}

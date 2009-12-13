@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../common.css" />
+</head>
+<body>
+<wicket:panel>
+ 	
+ 	<table class="simple">
+		<tr>
+		<th colspan="5">Markets: amount(profit)</th>
+		</tr>
+		<tr>
+			<th>Period</th>
+			<th>Green</th>
+			<th>White</th>
+			<th>Red</th>
+			<th>Total</th>
+		</tr>
+		<tr wicket:id="marketStat">
+			<td><span wicket:id="period">This week</span></td>
+			<td><span wicket:id="greenMarkets">34 (32)</span></td>
+			<td><span wicket:id="whiteMarkets">12 (0)</span></td>
+			<td><span wicket:id="redMarkets">16 (4)</span></td>
+			<td><span wicket:id="totalMarkets">45 (21)</span></td>
+		</tr>
+	</table>
+	
+</wicket:panel>
+</body>
+</html>

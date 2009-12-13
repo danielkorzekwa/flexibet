@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <script type='text/javascript' src='http://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {'packages':['annotatedtimeline']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+    	var rawdata = $rawdata
+        var data = new google.visualization.DataTable(rawdata.table);
+     
+        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+        chart.draw(data, {displayAnnotations: true,displayZoomButtons: false});
+      }
+    </script>
+  </head>
+
+   <body>
+    <div id='chart_div' style='width: 640px; height: 480px;'></div>
+  </body>
+</html>

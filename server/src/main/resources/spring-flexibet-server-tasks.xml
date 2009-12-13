@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<context:annotation-config/>
+		
+	<!--  Account statement timer task -->
+	<bean id="accountStatementTask" class="dk.flexibet.server.tasks.account.AccountStatementTaskImpl">
+		<constructor-arg value="AccountStatement"/>
+		<constructor-arg ref="accountStatementDao"/>
+		<constructor-arg ref="runnerStateDao"/>
+		<constructor-arg ref="betFairService"/>
+	</bean>
+	
+	<bean id="accountStatementJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<property name="targetObject" ref="accountStatementTask" />
+  		<property name="targetMethod" value="execute" />
+  		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="accountStatementTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    	<property name="jobDetail" ref="accountStatementJob" />
+    	<!-- 1 seconds -->
+    	<property name="startDelay" value="1000" />
+    	<!-- repeat every 60 seconds -->
+    	<property name="repeatInterval" value="60000" />
+	</bean>
+	
+	<!--  RemoveOldStateMachines task -->
+	<bean id="cleanUpTask" class="dk.flexibet.server.tasks.statemachine.CleanUpTaskImpl">
+		<constructor-arg value="CleanUp"/>
+		<constructor-arg ref="bettingEngine"/>
+	</bean>
+	
+	<bean id="cleanUpJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<property name="targetObject" ref="cleanUpTask" />
+  		<property name="targetMethod" value="execute" />
+  		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="cleanUpTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    	<property name="jobDetail" ref="cleanUpJob" />
+    	<!-- run every morning at 2 AM -->
+    	<property name="cronExpression" value="0 0 6 * * ?" />
+	</bean>
+		
+	<!--  Quartz Factory -->
+	<bean id="bettingServerScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="triggers">
+      	  	<list>
+      	      <ref bean="accountStatementTrigger" />   
+      	      <ref bean="cleanUpTrigger" />       
+        	</list>
+    	</property>
+    	<property name="schedulerName" value="bettingServerScheduler"/>
+	</bean>
+	
+</beans>

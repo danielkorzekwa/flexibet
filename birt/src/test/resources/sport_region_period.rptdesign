@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.17" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 2.3.1.v20080911 Build &lt;2.3.1.v20080922-1151></property>
+    <property name="units">in</property>
+    <property name="comments">Copyright (c) 2007 &lt;&lt;Your Company Name here>></property>
+    <html-property name="description">Creates a blank report with no predefined content.</html-property>
+    <list-property name="userProperties">
+        <structure>
+            <property name="name">runner_summary.detailed_runner_statement2.x</property>
+            <property name="type">integer</property>
+            <property name="isVisible">false</property>
+        </structure>
+        <structure>
+            <property name="name">runner_summary.detailed_runner_statement2.y</property>
+            <property name="type">integer</property>
+            <property name="isVisible">false</property>
+        </structure>
+    </list-property>
+    <property name="runner_summary.detailed_runner_statement2.x">135</property>
+    <property name="runner_summary.detailed_runner_statement2.y">80</property>
+    <text-property name="displayName">Blank Report</text-property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">commons.rptlibrary</property>
+            <property name="namespace">commons</property>
+        </structure>
+    </list-property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="470"
+ extends="commons.Data Source">
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost/botdb</property>
+            <property name="odaUser">postgres</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">cG9zdGdyZXM=</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="detailed_runner_statement" id="472">
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">market_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">selection_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">settled_date</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">sport_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">region_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">amount</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">market_id</property>
+                    <property name="nativeName">market_id</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">selection_id</property>
+                    <property name="nativeName">selection_id</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">settled_date</property>
+                    <property name="nativeName">settled_date</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">sport_name</property>
+                    <property name="nativeName">sport_name</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">region_name</property>
+                    <property name="nativeName">region_name</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">amount</property>
+                    <property name="nativeName">amount</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select a.market_id,a.selection_id,a.settled_date,m.sport_name,m.region_name ,sum(a.amount) as amount 
+from account_statement a,market_details m  where a.market_id=m.market_id
+group by a.market_id,a.selection_id, a.settled_date, m.sport_name,m.region_name
+order by a.settled_date desc</property>
+        </oda-data-set>
+    </data-sets>
+    <cubes>
+        <tabular-cube name="Data Cube" id="410">
+            <property name="dimensions">
+                <tabular-dimension name="sport_region" id="411">
+                    <property name="defaultHierarchy">NewTabularHierarchy</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy" id="412">
+                            <property name="levels">
+                                <tabular-level name="sport_name" id="413">
+                                    <property name="dataType">string</property>
+                                    <property name="columnName">sport_name</property>
+                                </tabular-level>
+                                <tabular-level name="region_name" id="414">
+                                    <property name="dataType">string</property>
+                                    <property name="columnName">region_name</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+                <tabular-dimension name="month" id="422">
+                    <property name="isTimeType">true</property>
+                    <property name="defaultHierarchy">NewTabularHierarchy1</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy1" id="423">
+                            <property name="levels">
+                                <tabular-level name="month" id="424">
+                                    <property name="dataType">integer</property>
+                                    <property name="dateTimeLevelType">month</property>
+                                    <list-property name="attributes">
+                                        <structure>
+                                            <property name="name">DateTime</property>
+                                            <property name="dataType">date-time</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="columnName">settled_date</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+                <tabular-dimension name="week" id="425">
+                    <property name="isTimeType">true</property>
+                    <property name="defaultHierarchy">NewTabularHierarchy2</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy2" id="426">
+                            <property name="levels">
+                                <tabular-level name="week-of-year" id="427">
+                                    <property name="dataType">integer</property>
+                                    <property name="dateTimeLevelType">week-of-year</property>
+                                    <list-property name="attributes">
+                                        <structure>
+                                            <property name="name">DateTime</property>
+                                            <property name="dataType">date-time</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="columnName">settled_date</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+            </property>
+            <property name="measureGroups">
+                <tabular-measure-group name="Summary Field" id="428">
+                    <property name="measures">
+                        <tabular-measure name="amount" id="429">
+                            <property name="function">sum</property>
+                            <expression name="measureExpression">dataSetRow["amount"]</expression>
+                            <property name="dataType">decimal</property>
+                        </tabular-measure>
+                    </property>
+                </tabular-measure-group>
+            </property>
+            <property name="dataSet">detailed_runner_statement</property>
+        </tabular-cube>
+    </cubes>
+    <styles>
+        <style name="crosstab-cell" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+            <property name="canShrink">true</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="leftMargin">1.25in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <extended-item extensionName="Crosstab" extensionVersion="2.3.0" id="415">
+            <property name="measures">
+                <extended-item extensionName="MeasureView" id="435">
+                    <property name="measure">amount</property>
+                    <property name="detail">
+                        <extended-item extensionName="AggregationCell" id="436">
+                            <property name="aggregationOnRow">sport_region/sport_name</property>
+                            <property name="aggregationOnColumn">week/week-of-year</property>
+                            <property name="content">
+                                <data id="437">
+                                    <property name="resultSetColumn">amount_sport_region/sport_name_week/week-of-year</property>
+                                </data>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="aggregations">
+                        <extended-item extensionName="AggregationCell" id="441">
+                            <property name="aggregationOnColumn">week/week-of-year</property>
+                            <property name="content">
+                                <data id="442">
+                                    <property name="resultSetColumn">amount_week/week-of-year</property>
+                                </data>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="header">
+                        <extended-item extensionName="CrosstabCell" id="438">
+                            <property name="content">
+                                <label id="439">
+                                    <text-property name="text"></text-property>
+                                </label>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="rows">
+                <extended-item extensionName="CrosstabView" id="417">
+                    <property name="grandTotal">
+                        <extended-item extensionName="CrosstabCell" id="440">
+                            <property name="content">
+                                <label id="443">
+                                    <text-property name="text">Grand Total</text-property>
+                                </label>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="views">
+                        <extended-item extensionName="DimensionView" id="418">
+                            <property name="dimension">sport_region</property>
+                            <property name="levels">
+                                <extended-item extensionName="LevelView" name="NewLevel View" id="419">
+                                    <property name="level">sport_region/sport_name</property>
+                                    <property name="member">
+                                        <extended-item extensionName="CrosstabCell" id="420">
+                                            <property name="content">
+                                                <data name="sport_name" id="421">
+                                                    <property name="resultSetColumn">sport_name</property>
+                                                </data>
+                                            </property>
+                                        </extended-item>
+                                    </property>
+                                </extended-item>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="columns">
+                <extended-item extensionName="CrosstabView" id="430">
+                    <property name="views">
+                        <extended-item extensionName="DimensionView" id="431">
+                            <property name="dimension">week</property>
+                            <property name="levels">
+                                <extended-item extensionName="LevelView" name="NewLevel View1" id="432">
+                                    <property name="level">week/week-of-year</property>
+                                    <property name="member">
+                                        <extended-item extensionName="CrosstabCell" id="433">
+                                            <property name="content">
+                                                <data name="week-of-year" id="434">
+                                                    <property name="resultSetColumn">week-of-year</property>
+                                                </data>
+                                            </property>
+                                        </extended-item>
+                                    </property>
+                                </extended-item>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="header">
+                <extended-item extensionName="CrosstabCell" id="416"/>
+            </property>
+            <property name="canShrink">true</property>
+            <property name="cube">Data Cube</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">sport_name</property>
+                    <expression name="expression">dimension["sport_region"]["sport_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">week-of-year</property>
+                    <expression name="expression">dimension["week"]["week-of-year"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">amount_sport_region/sport_name_week/week-of-year</property>
+                    <expression name="expression">measure["amount"]</expression>
+                    <property name="dataType">decimal</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>sport_region/sport_name</value>
+                        <value>week/week-of-year</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">sum</property>
+                </structure>
+                <structure>
+                    <property name="name">amount_week/week-of-year</property>
+                    <expression name="expression">measure["amount"]</expression>
+                    <property name="dataType">decimal</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>week/week-of-year</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">sum</property>
+                </structure>
+            </list-property>
+        </extended-item>
+        <extended-item extensionName="Crosstab" extensionVersion="2.3.0" id="444">
+            <property name="measures">
+                <extended-item extensionName="MeasureView" id="459">
+                    <property name="measure">amount</property>
+                    <property name="detail">
+                        <extended-item extensionName="AggregationCell" id="460">
+                            <property name="aggregationOnRow">sport_region/region_name</property>
+                            <property name="aggregationOnColumn">month/month</property>
+                            <property name="content">
+                                <data id="461">
+                                    <property name="resultSetColumn">amount_sport_region/region_name_month/month</property>
+                                </data>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="aggregations">
+                        <extended-item extensionName="AggregationCell" id="465">
+                            <property name="aggregationOnColumn">month/month</property>
+                            <property name="content">
+                                <data id="466">
+                                    <property name="resultSetColumn">amount_month/month</property>
+                                </data>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="header">
+                        <extended-item extensionName="CrosstabCell" id="462">
+                            <property name="content">
+                                <label id="463">
+                                    <text-property name="text"></text-property>
+                                </label>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="rows">
+                <extended-item extensionName="CrosstabView" id="446">
+                    <property name="grandTotal">
+                        <extended-item extensionName="CrosstabCell" id="464">
+                            <property name="content">
+                                <label id="467">
+                                    <text-property name="text">Grand Total</text-property>
+                                </label>
+                            </property>
+                        </extended-item>
+                    </property>
+                    <property name="views">
+                        <extended-item extensionName="DimensionView" id="447">
+                            <property name="dimension">sport_region</property>
+                            <property name="levels">
+                                <extended-item extensionName="LevelView" name="NewLevel View2" id="448">
+                                    <property name="level">sport_region/sport_name</property>
+                                    <property name="member">
+                                        <extended-item extensionName="CrosstabCell" id="449">
+                                            <property name="content">
+                                                <data name="sport_name1" id="450">
+                                                    <property name="resultSetColumn">sport_name</property>
+                                                </data>
+                                            </property>
+                                        </extended-item>
+                                    </property>
+                                </extended-item>
+                                <extended-item extensionName="LevelView" name="NewLevel View3" id="451">
+                                    <property name="level">sport_region/region_name</property>
+                                    <property name="member">
+                                        <extended-item extensionName="CrosstabCell" id="452">
+                                            <property name="content">
+                                                <data name="region_name" id="453">
+                                                    <property name="resultSetColumn">region_name</property>
+                                                </data>
+                                            </property>
+                                        </extended-item>
+                                    </property>
+                                </extended-item>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="columns">
+                <extended-item extensionName="CrosstabView" id="454">
+                    <property name="views">
+                        <extended-item extensionName="DimensionView" id="455">
+                            <property name="dimension">month</property>
+                            <property name="levels">
+                                <extended-item extensionName="LevelView" name="NewLevel View4" id="456">
+                                    <property name="level">month/month</property>
+                                    <property name="member">
+                                        <extended-item extensionName="CrosstabCell" id="457">
+                                            <property name="content">
+                                                <data name="month" id="458">
+                                                    <property name="resultSetColumn">month</property>
+                                                </data>
+                                            </property>
+                                        </extended-item>
+                                    </property>
+                                </extended-item>
+                            </property>
+                        </extended-item>
+                    </property>
+                </extended-item>
+            </property>
+            <property name="header">
+                <extended-item extensionName="CrosstabCell" id="445"/>
+            </property>
+            <property name="marginTop">10pt</property>
+            <property name="cube">Data Cube</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">sport_name</property>
+                    <expression name="expression">dimension["sport_region"]["sport_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">region_name</property>
+                    <expression name="expression">dimension["sport_region"]["region_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">month</property>
+                    <expression name="expression">dimension["month"]["month"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">amount_sport_region/region_name_month/month</property>
+                    <expression name="expression">measure["amount"]</expression>
+                    <property name="dataType">decimal</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>sport_region/region_name</value>
+                        <value>month/month</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">sum</property>
+                </structure>
+                <structure>
+                    <property name="name">amount_month/month</property>
+                    <expression name="expression">measure["amount"]</expression>
+                    <property name="dataType">decimal</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>month/month</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">sum</property>
+                </structure>
+            </list-property>
+        </extended-item>
+    </body>
+</report>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" xmlns:my="http://my.custom-actions/CUSTOM" version="1.0"
+ 	   
+	initialstate="noBets">
+
+	<state id="noBets">
+		<transition target="layPlaced"
+			cond="bwinRunner.betPriceToBack>0 and (1/runner.priceToBack - 1/bwinRunner.priceToBack) >=0.02 and runnerBets.muBets == 0">
+			<my:placeBet price="runner.priceToBack"/>
+		</transition>
+	</state>
+
+	<state id="layPlaced">
+	</state>
+
+</scxml>

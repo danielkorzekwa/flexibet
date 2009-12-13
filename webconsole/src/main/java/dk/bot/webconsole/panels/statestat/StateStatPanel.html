@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../common.css" />
+</head>
+<body>
+<wicket:panel>
+
+ 	<table class="simple">
+
+		<tr>
+			<th></th>
+			<th colspan=4>This week</th>
+			<th colspan=4>Last week</th>
+		</tr>
+		<tr>
+			<th>State</th>
+			<th>Green</th>
+			<th>White</th>
+			<th>Red</th>
+			<th>Total</th>
+			<th>Green</th>
+			<th>White</th>
+			<th>Red</th>
+			<th>Total</th>
+		</tr>
+		<tr wicket:id="statesStat">
+			<td wicket:id="state">backMatched</td>
+			<td><span wicket:id="green">34 (32)</span></td>
+			<td><span wicket:id="white">12 (0)</span></td>
+			<td><span wicket:id="red">16 (4)</span></td>
+			<td><span wicket:id="total">45 (21)</span></td>
+			<td><span wicket:id="lastWeekGreen">34 (32)</span></td>
+			<td><span wicket:id="lastWeekWhite">12 (0)</span></td>
+			<td><span wicket:id="lastWeekRed">16 (4)</span></td>
+			<td><span wicket:id="lastWeekTotal">45 (21)</span></td>
+		</tr>
+	</table>
+		
+</wicket:panel>
+</body>
+</html>

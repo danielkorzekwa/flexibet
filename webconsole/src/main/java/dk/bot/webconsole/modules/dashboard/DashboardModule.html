@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="../../common.css" />
+</head>
+<body>
+<wicket:panel>
+
+<div class="mainPanel">
+
+<div class="leftPanel">
+
+	
+	<br />
+
+	<div wicket:id="MarketStat">[Market stat table is here]</div>
+
+	</div>
+
+	<div class="rightPanel">
+		<div wicket:id="StatesStat">StateStat table</div>
+	<br />
+
+	<table class="simple">
+		<tr>
+		<th colspan="5">Markets</th>
+		</tr>
+		<tr>
+			<th>Sport</th>
+			<th>Betfair</th>
+			<th>Bwin (matched)</th>
+			<th>OddsChecker (matched)</th>
+		</tr>
+		<tr wicket:id="sportStat">
+			<td><span wicket:id="sport">SOCCER</span></td>
+			<td><span wicket:id="betfair">423</span></td>
+			<td><span wicket:id="bwin">843</span> (<span
+				wicket:id="bwinMatched">234</span>)</td>
+			<td><span wicket:id="oddsChecker">343</span> (<span
+				wicket:id="oddsCheckerMatched">343</span>)</td>
+		</tr>
+	</table>
+
+	</div>
+
+</div>
+	
+
+</wicket:panel>
+</body>
+</html>

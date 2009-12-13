@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+	xmlns:my="http://my.custom-actions/CUSTOM"
+	version="1.0"
+	initialstate="noBets">
+
+	<state id="noBets">
+	
+		<transition target="hr_noBets"
+			cond="market.eventPath == '/7/298251/'">
+		</transition>
+
+	</state>
+
+<!--*********************************************************************************-->	
+	
+	<state id="hr_noBets">
+
+		<transition target="hr_layPlaced"
+			cond="market.name=='Win Market' and runner.priceToLay!=1000 and runner.priceToBack!=1.01 and runner.priceToLay lt 10 and (1/runner.priceToBack)-(1/runner.priceToLay)>0.05 and (1/runner.priceToBack)-(1/runner.priceToLay) lt 0.7 and market.totalMatched > -1 and marketDetails.marketSuspendTime-now > 1000*3600*2*1 and marketDetails.marketSuspendTime-now lt 1000*3600*4*1">
+			<my:placeBet betType="'L'" price="runner.priceToBack+0.01" size="3" />
+		</transition>
+
+		<transition target="hr_3_layPlaced"
+			cond="market.name=='Place Market' and runner.priceToLay!=1000 and runner.priceToBack!=1.01 and runner.priceToLay lt 10 and (1/runner.priceToBack)-(1/runner.priceToLay)>0.1 and (1/runner.priceToBack)-(1/runner.priceToLay) lt 0.7 and market.totalMatched > -1 and marketDetails.marketSuspendTime-now > 1000*3600*2*1 and marketDetails.marketSuspendTime-now lt 1000*3600*4*1">
+			<my:placeBet betType="'L'" price="runner.priceToBack+0.01" size="3" />
+		</transition>
+
+	</state>
+
+<!--*********************************************************************************-->
+
+	<state id="hr_layPlaced">
+
+		<transition target="hr_layMatched" cond="lastBetLay.sizeMatched > 0">
+			<my:cancelBet betId="lastBetLay.betId"/>
+		</transition>
+
+		<transition target="hr_noBets" cond="lastBetLay.sizeCancelled > 0" />
+
+		<transition cond="(1/lastBetLay.price)-(1/runner.priceToLay) lt 0.05 or runner.priceToBack > lastBetLay.price">
+			<my:cancelBet betId="lastBetLay.betId" />
+		</transition>
+
+	</state>
+
+	<state id="hr_layMatched">
+
+
+		<transition target="hr_layMatchedSome" cond="lastBetLay.sizeMatched lt 1.8"/>
+			
+
+		<transition target="hr_backPlaced" cond="(1/(runner.priceToLay-0.01))-(1/lastBetLay.avgPriceMatched) lt -0.01 and market.inPlayDelay==0">
+			<my:placeBet betType="'B'" price="runner.priceToLay-0.01" size="(lastBetLay.sizeMatched*lastBetLay.avgPriceMatched)/(runner.priceToLay-0.01)" />
+		</transition>
+
+	</state>
+
+	<state id="hr_layMatchedSome"/>
+	
+
+	<state id="hr_backPlaced">
+
+		<transition target="2hr_noBets" cond="lastBetBack.sizeMatched > 0" />
+
+		<transition target="hr_layMatched" cond="lastBetBack.sizeCancelled > 0" />
+
+		<transition cond="now-lastBetBack.placedDate gt 1000*1*1 and runner.priceToLay lt lastBetBack.price">
+			<my:cancelBet betId="lastBetBack.betId" />
+		</transition>
+	</state>
+
+	<state id="hr_backMatched"/>
+
+<!--*********************************************************************************-->
+
+	<state id="hr_3_layPlaced">
+
+		<transition target="hr_3_layMatched" cond="lastBetLay.sizeMatched > 0">
+			<my:cancelBet betId="lastBetLay.betId"/>
+		</transition>
+
+		<transition target="hr_noBets" cond="lastBetLay.sizeCancelled > 0" />
+
+		<transition cond="(1/lastBetLay.price)-(1/runner.priceToLay) lt 0.1 or runner.priceToBack > lastBetLay.price">
+			<my:cancelBet betId="lastBetLay.betId" />
+		</transition>
+
+	</state>
+
+	<state id="hr_3_layMatched">
+
+
+		<transition target="hr_3_layMatchedSome" cond="lastBetLay.sizeMatched lt 1.8"/>
+			
+
+		<transition target="hr_3_backPlaced" cond="(1/(runner.priceToLay-0.01))-(1/lastBetLay.avgPriceMatched) lt -0.01 and market.inPlayDelay==0">
+			<my:placeBet betType="'B'" price="runner.priceToLay-0.01" size="(lastBetLay.sizeMatched*lastBetLay.avgPriceMatched)/(runner.priceToLay-0.01)" />
+		</transition>
+
+	</state>
+
+	<state id="hr_3_layMatchedSome"/>
+	
+
+	<state id="hr_3_backPlaced">
+
+		<transition target="2hr_noBets" cond="lastBetBack.sizeMatched > 0" />
+
+		<transition target="hr_3_layMatched" cond="lastBetBack.sizeCancelled > 0" />
+
+		<transition cond="now-lastBetBack.placedDate gt 1000*1*1 and runner.priceToLay lt lastBetBack.price">
+			<my:cancelBet betId="lastBetBack.betId" />
+		</transition>
+	</state>
+
+	<state id="hr_3_backMatched"/>
+
+
+
+<!--*********************************************************************************-->
+<!--*********************************************************************************-->
+
+<state id="2hr_noBets">
+
+		<transition target="2hr_layPlaced"
+			cond="market.name!='To Be Placed' and runner.priceToLay!=1000 and runner.priceToBack!=1.01 and runner.priceToLay lt 10 and (1/runner.priceToBack)-(1/runner.priceToLay)>0.1 and (1/runner.priceToBack)-(1/runner.priceToLay) lt 0.7 and market.totalMatched > -1 and marketDetails.marketSuspendTime-now > 1000*3600*2*1 and marketDetails.marketSuspendTime-now lt 1000*3600*4*1">
+			<my:placeBet betType="'L'" price="runner.priceToBack+0.01" size="3" />
+		</transition>
+
+		<transition target="2hr_3_layPlaced"
+			cond="market.name=='To Be Placed' and runner.priceToLay!=1000 and runner.priceToBack!=1.01 and runner.priceToLay lt 10 and (1/runner.priceToBack)-(1/runner.priceToLay)>0.2 and (1/runner.priceToBack)-(1/runner.priceToLay) lt 0.7 and market.totalMatched > -1 and marketDetails.marketSuspendTime-now > 1000*3600*2*1 and marketDetails.marketSuspendTime-now lt 1000*3600*4*1">
+			<my:placeBet betType="'L'" price="runner.priceToBack+0.01" size="3" />
+		</transition>
+
+	</state>
+
+<!--*********************************************************************************-->
+
+	<state id="2hr_layPlaced">
+
+		<transition target="2hr_layMatched" cond="lastBetLay.sizeMatched > 0">
+			<my:cancelBet betId="lastBetLay.betId"/>
+		</transition>
+
+		<transition target="2hr_noBets" cond="lastBetLay.sizeCancelled > 0" />
+
+		<transition cond="(1/lastBetLay.price)-(1/runner.priceToLay) lt 0.05 or runner.priceToBack > lastBetLay.price">
+			<my:cancelBet betId="lastBetLay.betId" />
+		</transition>
+
+	</state>
+
+	<state id="2hr_layMatched">
+
+
+		<transition target="2hr_layMatchedSome" cond="lastBetLay.sizeMatched lt 1.8"/>
+			
+
+		<transition target="2hr_backPlaced" cond="(1/(runner.priceToLay-0.01))-(1/lastBetLay.avgPriceMatched) lt -0.01 and market.inPlayDelay==0">
+			<my:placeBet betType="'B'" price="runner.priceToLay-0.01" size="(lastBetLay.sizeMatched*lastBetLay.avgPriceMatched)/(runner.priceToLay-0.01)" />
+		</transition>
+
+	</state>
+
+	<state id="2hr_layMatchedSome"/>
+	
+
+	<state id="2hr_backPlaced">
+
+		<transition target="2hr_backMatched" cond="lastBetBack.sizeMatched > 0" />
+
+		<transition target="2hr_layMatched" cond="lastBetBack.sizeCancelled > 0" />
+
+		<transition cond="now-lastBetBack.placedDate gt 1000*1*1 and runner.priceToLay lt lastBetBack.price">
+			<my:cancelBet betId="lastBetBack.betId" />
+		</transition>
+	</state>
+
+	<state id="2hr_backMatched"/>
+
+<!--*********************************************************************************-->
+
+	<state id="2hr_3_layPlaced">
+
+		<transition target="2hr_3_layMatched" cond="lastBetLay.sizeMatched > 0">
+			<my:cancelBet betId="lastBetLay.betId"/>
+		</transition>
+
+		<transition target="2hr_noBets" cond="lastBetLay.sizeCancelled > 0" />
+
+		<transition cond="(1/lastBetLay.price)-(1/runner.priceToLay) lt 0.1 or runner.priceToBack > lastBetLay.price">
+			<my:cancelBet betId="lastBetLay.betId" />
+		</transition>
+
+	</state>
+
+	<state id="2hr_3_layMatched">
+
+
+		<transition target="2hr_3_layMatchedSome" cond="lastBetLay.sizeMatched lt 1.8"/>
+			
+
+		<transition target="2hr_3_backPlaced" cond="(1/(runner.priceToLay-0.01))-(1/lastBetLay.avgPriceMatched) lt -0.01 and market.inPlayDelay==0">
+			<my:placeBet betType="'B'" price="runner.priceToLay-0.01" size="(lastBetLay.sizeMatched*lastBetLay.avgPriceMatched)/(runner.priceToLay-0.01)" />
+		</transition>
+
+	</state>
+
+	<state id="2hr_3_layMatchedSome"/>
+	
+
+	<state id="2hr_3_backPlaced">
+
+		<transition target="2hr_3_backMatched" cond="lastBetBack.sizeMatched > 0" />
+
+		<transition target="2hr_3_layMatched" cond="lastBetBack.sizeCancelled > 0" />
+
+		<transition cond="now-lastBetBack.placedDate gt 1000*1*1 and runner.priceToLay lt lastBetBack.price">
+			<my:cancelBet betId="lastBetBack.betId" />
+		</transition>
+	</state>
+
+	<state id="2hr_3_backMatched"/>
+
+
+
+<!--*********************************************************************************-->
+
+
+</scxml>

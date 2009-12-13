@@ -1,0 +1,12 @@
+marketfilter {
+
+	soccer {
+		eventpath = "/1/"
+		marketname = "Match Odds"
+	}
+	
+	horseracing_GB {
+		eventpath = "/7/298251/"
+	}
+
+}

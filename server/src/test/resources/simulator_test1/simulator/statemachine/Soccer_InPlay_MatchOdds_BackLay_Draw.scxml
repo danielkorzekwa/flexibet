@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+	xmlns:my="http://my.custom-actions/CUSTOM"
+	version="1.0"
+	initialstate="noBets">
+
+	<state id="noBets">
+		<transition target="backPlaced"
+			cond="runner.name=='The Draw' and market.inPlayDelay gt 0 and runner.slope lt -0.03 and runner.priceToLay lt 3">
+			<my:placeBet betType="'B'" price="runner.priceToLay-0.01" size="3" checkTxCounter="'false'"/>
+		</transition>
+	</state>
+
+	<state id="backPlaced">
+		<transition target="backMatched" cond="lastBetBack.sizeMatched > 0">
+			<my:cancelBet betId="lastBetBack.betId"/>
+		</transition>
+
+		<transition target="noBets" cond="lastBetBack.sizeCancelled > 0" />
+
+		<transition cond="runner.priceToLay lt lastBetBack.price">
+			<my:cancelBet betId="lastBetBack.betId" />
+		</transition>
+
+	</state>
+
+	<state id="backMatched">		
+
+		<transition target="layPlaced" cond="(1/(runner.priceToBack+0.01))-(1/lastBetBack.avgPriceMatched)>0.05">
+			<my:placeBet betType="'L'" price="runner.priceToBack+0.01" size="(lastBetBack.sizeMatched*lastBetBack.avgPriceMatched)/(runner.priceToBack+0.01)" checkTxCounter="'false'"/>
+		</transition>
+	</state>
+	
+	<state id="layPlaced">
+
+		<transition target="layMatched" cond="lastBetLay.sizeMatched > 0" />
+
+		<transition target="backMatched" cond="lastBetLay.sizeCancelled > 0" />
+
+		<transition cond="runner.priceToBack gt lastBetLay.price">
+			<my:cancelBet betId="lastBetLay.betId" />
+		</transition>
+	</state>
+
+	<state id="layMatched"/>
+
+<!--*********************************************************************************-->	
+</scxml>
