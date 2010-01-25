@@ -1,5 +1,5 @@
-delete from runner_state_bet where runner_state_id in (select rs.id from runner_state rs, market m where rs.market_id=m.market_id and m.market_time<'2009-11-01 00:00:00' limit 1000);
+delete from runner_state_bet where runner_state_id in (select rsb.runner_state_id from runner_state_bet rsb, runner_state rs, market_details m where rsb.runner_state_id=rs.id and rs.market_id=m.market_id and m.market_time<'2009-12-25 00:00:00' limit 50000);
 
-delete from runner_state_last_bet where runner_state_id in (select rs.id from runner_state rs, market m where rs.market_id=m.market_id and m.market_time<'2009-11-01 00:00:00' limit 1000);
+delete from runner_state_last_bet where runner_state_id in (select rsb.runner_state_id from runner_state_bet rsb, runner_state rs, market m where rsb.runner_state_id=rs.id and rs.market_id=m.market_id and m.market_time<'2009-11-01 00:00:00' limit 1000);
 
-delete from runner_state where id in (select rs.id from runner_state rs, market m where rs.market_id=m.market_id and m.market_time<'2009-11-01 00:00:00' limit 1000);
+delete from runner_state where id in (select rs.id from runner_state rs, market m where rs.market_id=m.market_id and m.market_time<'2009-09-27 00:00:00' limit 10);
