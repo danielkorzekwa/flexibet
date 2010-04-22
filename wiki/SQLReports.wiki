@@ -1,6 +1,6 @@
 This page contains sql reports that provide some useful data not available on the web console:
 
-#Number of placed bets for a given day grouped by hour:
+# Number of placed bets for a given day grouped by hour:
 
 {{{select date_trunc('hour',placed_date) as hour,count(*)  from runner_state_bet where placed_date between '2010-04-22 00:00:00' and '2010-04-22 23:59:59' group by hour order by hour}}}
 
